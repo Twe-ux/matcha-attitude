@@ -157,7 +157,7 @@ export default function CartPage() {
                         <div className="flex items-center space-x-3 bg-white/60 backdrop-blur-sm rounded-2xl p-2 border border-white/50">
                           <button
                             onClick={() =>
-                              updateQuantity(item.productId, item.quantity - 1)
+                              updateQuantity(item.id, item.quantity - 1)
                             }
                             disabled={item.quantity <= 1}
                             className="w-10 h-10 rounded-xl bg-white shadow-sm hover:shadow-md transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center text-matcha-600 hover:bg-matcha-50"
@@ -171,7 +171,7 @@ export default function CartPage() {
 
                           <button
                             onClick={() =>
-                              updateQuantity(item.productId, item.quantity + 1)
+                              updateQuantity(item.id, item.quantity + 1)
                             }
                             disabled={item.quantity >= item.stock}
                             className="w-10 h-10 rounded-xl bg-white shadow-sm hover:shadow-md transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center text-matcha-600 hover:bg-matcha-50"
@@ -181,7 +181,7 @@ export default function CartPage() {
                         </div>
 
                         <button
-                          onClick={() => removeItem(item.productId)}
+                          onClick={() => removeItem(item.id)}
                           className="w-10 h-10 rounded-xl bg-red-50 text-red-500 hover:bg-red-100 hover:text-red-600 transition-all duration-200 flex items-center justify-center group"
                         >
                           <Trash2 className="h-4 w-4 group-hover:scale-110 transition-transform" />

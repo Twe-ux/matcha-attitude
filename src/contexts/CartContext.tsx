@@ -27,8 +27,8 @@ interface CartContextType {
     },
     quantity?: number
   ) => void;
-  removeItem: (productId: string) => void;
-  updateQuantity: (productId: string, quantity: number) => void;
+  removeItem: (itemId: string) => Promise<void>;
+  updateQuantity: (itemId: string, quantity: number) => Promise<void>;
   clearCart: () => void;
   isLoading: boolean;
 }
@@ -149,37 +149,65 @@ export function CartProvider({ children }: CartProviderProps) {
     });
   };
 
-  const removeItem = (productId: string) => {
-    setItems((currentItems) => {
-      const item = currentItems.find((item) => item.productId === productId);
-      if (item) {
-        toast.success(`${item.name} retiré du panier`);
+  const removeItem = async (itemId: string) => {
+    try {
+      const response = await fetch(`/api/cart/${itemId}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        setItems((currentItems) => {
+          const item = currentItems.find((item) => item.id === itemId);
+          if (item) {
+            toast.success(`${item.name} retiré du panier`);
+          }
+          return currentItems.filter((item) => item.id !== itemId);
+        });
+      } else {
+        toast.error("Erreur lors de la suppression de l'article");
       }
-      return currentItems.filter((item) => item.productId !== productId);
-    });
+    } catch {
+      toast.error("Erreur lors de la suppression de l'article");
+    }
   };
 
-  const updateQuantity = (productId: string, quantity: number) => {
+  const updateQuantity = async (itemId: string, quantity: number) => {
     if (quantity <= 0) {
-      removeItem(productId);
+      removeItem(itemId);
       return;
     }
 
-    setItems((currentItems) => {
-      return currentItems.map((item) => {
-        if (item.productId === productId) {
-          // Vérifier le stock
-          if (quantity > item.stock) {
-            toast.error(
-              `Stock insuffisant. Seulement ${item.stock} article(s) disponible(s).`
-            );
-            return item;
-          }
-          return { ...item, quantity };
-        }
-        return item;
+    try {
+      const response = await fetch(`/api/cart/${itemId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ quantity }),
       });
-    });
+
+      if (response.ok) {
+        setItems((currentItems) => {
+          return currentItems.map((item) => {
+            if (item.id === itemId) {
+              // Vérifier le stock
+              if (quantity > item.stock) {
+                toast.error(
+                  `Stock insuffisant. Seulement ${item.stock} article(s) disponible(s).`
+                );
+                return item;
+              }
+              return { ...item, quantity };
+            }
+            return item;
+          });
+        });
+      } else {
+        toast.error("Erreur lors de la mise à jour de la quantité");
+      }
+    } catch {
+      toast.error("Erreur lors de la mise à jour de la quantité");
+    }
   };
 
   const clearCart = () => {
