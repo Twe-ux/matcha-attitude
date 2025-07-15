@@ -115,10 +115,33 @@ export default function ProfilePage() {
     }
   };
 
-  const handleAddressSuccess = () => {
-    fetchProfile();
-    setShowAddressModal(false);
-    setEditingAddress(null);
+  const handleAddressSave = async (addressData: Omit<Address, "id">) => {
+    try {
+      const url = editingAddress
+        ? `/api/profile/addresses/${editingAddress.id}`
+        : "/api/profile/addresses";
+
+      const method = editingAddress ? "PATCH" : "POST";
+
+      const response = await fetch(url, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(addressData),
+      });
+
+      if (response.ok) {
+        await fetchProfile();
+        setShowAddressModal(false);
+        setEditingAddress(null);
+      } else {
+        throw new Error("Erreur lors de la sauvegarde de l'adresse");
+      }
+    } catch (error) {
+      console.error("Erreur lors de la sauvegarde de l'adresse:", error);
+      throw error;
+    }
   };
 
   const handleEditAddress = (address: Address) => {
@@ -584,8 +607,9 @@ export default function ProfilePage() {
             setShowAddressModal(false);
             setEditingAddress(null);
           }}
-          onSuccess={handleAddressSuccess}
+          onSave={handleAddressSave}
           address={editingAddress}
+          title={editingAddress ? "Modifier l'adresse" : "Ajouter une adresse"}
         />
       )}
     </div>
