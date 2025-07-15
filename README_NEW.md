@@ -5,6 +5,7 @@ Matcha est un site de vente en ligne moderne développé avec Next.js 15, TypeSc
 ## 🚀 Fonctionnalités
 
 ### ✅ Déjà implémentées
+
 - **Interface utilisateur moderne** avec Next.js 15 et shadcn/ui
 - **Authentification sécurisée** avec NextAuth.js
 - **Base de données** avec Prisma et PostgreSQL
@@ -13,6 +14,7 @@ Matcha est un site de vente en ligne moderne développé avec Next.js 15, TypeSc
 - **API RESTful** pour les produits, panier, et authentification
 
 ### 🚧 En cours de développement
+
 - **Système de panier** complet
 - **Intégration Stripe** pour les paiements
 - **Interface d'administration** pour gérer les produits
@@ -49,29 +51,34 @@ src/
 ## 🚀 Installation et développement
 
 1. **Cloner le projet**
+
 ```bash
 git clone <repository-url>
 cd matcha
 ```
 
 2. **Installer les dépendances**
+
 ```bash
 npm install
 ```
 
 3. **Configurer les variables d'environnement**
+
 ```bash
 cp .env.example .env
 # Modifier le fichier .env avec vos configurations
 ```
 
 4. **Configurer la base de données**
+
 ```bash
 npx prisma migrate dev --name init
 npx prisma generate
 ```
 
 5. **Démarrer le serveur de développement**
+
 ```bash
 npm run dev
 ```
@@ -100,20 +107,24 @@ Le schéma de la base de données comprend :
 ## 📝 API Endpoints
 
 ### Authentification
+
 - `POST /api/auth/register` - Inscription
 - `POST /api/auth/signin` - Connexion (NextAuth)
 
 ### Produits
+
 - `GET /api/products` - Liste des produits (avec pagination, filtres)
 - `POST /api/products` - Créer un produit (admin uniquement)
 
 ### Panier
+
 - `GET /api/cart` - Récupérer le panier
 - `POST /api/cart` - Ajouter au panier
 
 ## 🎨 Interface utilisateur
 
 L'interface utilise un design moderne avec :
+
 - Palette de couleurs verte (thème matcha)
 - Composants responsive de shadcn/ui
 - Navigation intuitive avec panier et compte utilisateur
