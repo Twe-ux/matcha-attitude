@@ -26,7 +26,7 @@ interface Order {
 }
 
 export default function AdminOrders() {
-  const [orders, setOrders] = useState<Order[]>([]);
+  const [orders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

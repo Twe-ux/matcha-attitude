@@ -139,7 +139,7 @@ export default function Home() {
               </div>
               <h3 className="text-xl font-semibold mb-2">Livraison Rapide</h3>
               <p className="text-gray-600">
-                Livraison gratuite dès 50€ d'achat, expédition sous 24h.
+                Livraison gratuite dès 50€ d&apos;achat, expédition sous 24h.
               </p>
             </div>
             <div className="text-center">
@@ -149,7 +149,7 @@ export default function Home() {
               <h3 className="text-xl font-semibold mb-2">Paiement Sécurisé</h3>
               <p className="text-gray-600">
                 Transactions sécurisées avec Stripe pour votre tranquillité
-                d'esprit.
+                d&apos;esprit.
               </p>
             </div>
           </div>

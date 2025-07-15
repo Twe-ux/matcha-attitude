@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
 // DELETE /api/cart/[itemId] - Supprimer un article du panier
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { itemId: string } }
+  { params }: { params: Promise<{ itemId: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -15,7 +15,7 @@ export async function DELETE(
       return NextResponse.json({ error: "Non authentifié" }, { status: 401 });
     }
 
-    const { itemId } = params;
+    const { itemId } = await params;
 
     // Vérifier que l'article appartient bien à l'utilisateur
     const cartItem = await prisma.cartItem.findUnique({
@@ -56,7 +56,7 @@ export async function DELETE(
 // PATCH /api/cart/[itemId] - Mettre à jour la quantité d'un article
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { itemId: string } }
+  { params }: { params: Promise<{ itemId: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -65,7 +65,7 @@ export async function PATCH(
       return NextResponse.json({ error: "Non authentifié" }, { status: 401 });
     }
 
-    const { itemId } = params;
+    const { itemId } = await params;
     const body = await request.json();
     const { quantity } = body;
 

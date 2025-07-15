@@ -15,7 +15,7 @@ const addressSchema = z.object({
 // PATCH /api/profile/addresses/[id] - Modifier une adresse
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -24,7 +24,7 @@ export async function PATCH(
       return NextResponse.json({ error: "Non authentifié" }, { status: 401 });
     }
 
-    const { id } = params;
+    const { id } = await params;
     const body = await request.json();
     const validatedData = addressSchema.parse(body);
 
@@ -85,7 +85,7 @@ export async function PATCH(
 // DELETE /api/profile/addresses/[id] - Supprimer une adresse
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -94,7 +94,7 @@ export async function DELETE(
       return NextResponse.json({ error: "Non authentifié" }, { status: 401 });
     }
 
-    const { id } = params;
+    const { id } = await params;
 
     // Vérifier que l'adresse appartient à l'utilisateur
     const existingAddress = await prisma.address.findUnique({
