@@ -2,7 +2,17 @@
 
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
-import { Calendar, CreditCard, Eye, Package, ShoppingBag, Clock, Truck, CheckCircle, X } from "lucide-react";
+import {
+  Calendar,
+  CheckCircle,
+  Clock,
+  CreditCard,
+  Eye,
+  Package,
+  ShoppingBag,
+  Truck,
+  X,
+} from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -38,31 +48,31 @@ const statusConfig = {
     label: "En attente",
     color: "bg-amber-100 text-amber-800 border-amber-200",
     icon: Clock,
-    gradient: "from-amber-500 to-orange-500"
+    gradient: "from-amber-500 to-orange-500",
   },
   CONFIRMED: {
     label: "Confirmée",
     color: "bg-blue-100 text-blue-800 border-blue-200",
     icon: CheckCircle,
-    gradient: "from-blue-500 to-cyan-500"
+    gradient: "from-blue-500 to-cyan-500",
   },
   SHIPPED: {
     label: "Expédiée",
     color: "bg-purple-100 text-purple-800 border-purple-200",
     icon: Truck,
-    gradient: "from-purple-500 to-pink-500"
+    gradient: "from-purple-500 to-pink-500",
   },
   DELIVERED: {
     label: "Livrée",
     color: "bg-green-100 text-green-800 border-green-200",
     icon: CheckCircle,
-    gradient: "from-green-500 to-emerald-500"
+    gradient: "from-green-500 to-emerald-500",
   },
   CANCELLED: {
     label: "Annulée",
     color: "bg-red-100 text-red-800 border-red-200",
     icon: X,
-    gradient: "from-red-500 to-pink-500"
+    gradient: "from-red-500 to-pink-500",
   },
 };
 
@@ -112,7 +122,9 @@ export default function OrdersPage() {
             <h3 className="text-2xl font-bold text-matcha-700 mb-2 font-[family-name:var(--font-playfair)]">
               Chargement de vos Commandes Premium
             </h3>
-            <p className="text-neutral-600">Consultation de votre historique d&apos;achats...</p>
+            <p className="text-neutral-600">
+              Consultation de votre historique d&apos;achats...
+            </p>
           </div>
         </div>
       </div>
@@ -139,7 +151,8 @@ export default function OrdersPage() {
               Mes Commandes Premium
             </h1>
             <p className="text-xl text-neutral-600 max-w-2xl mx-auto">
-              Suivez vos commandes et découvrez l&apos;historique de vos achats matcha d&apos;exception
+              Suivez vos commandes et découvrez l&apos;historique de vos achats
+              matcha d&apos;exception
             </p>
           </div>
 
@@ -156,11 +169,11 @@ export default function OrdersPage() {
                   Aucune commande pour l&apos;instant
                 </h3>
                 <p className="text-lg text-neutral-600 mb-8 leading-relaxed">
-                  Découvrez notre collection premium de produits matcha 
-                  et passez votre première commande d&apos;exception.
+                  Découvrez notre collection premium de produits matcha et
+                  passez votre première commande d&apos;exception.
                 </p>
                 <button
-                  onClick={() => router.push('/products')}
+                  onClick={() => router.push("/products")}
                   className="btn-premium-primary px-8 py-4 text-lg"
                 >
                   <span className="flex items-center space-x-2">
@@ -174,20 +187,23 @@ export default function OrdersPage() {
           ) : (
             <div className="space-y-8">
               {orders.map((order, index) => {
-                const statusInfo = statusConfig[order.status as keyof typeof statusConfig];
+                const statusInfo =
+                  statusConfig[order.status as keyof typeof statusConfig];
                 const StatusIcon = statusInfo.icon;
-                
+
                 return (
                   <div
                     key={order.id}
                     className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-premium hover:shadow-premium-lg transition-all duration-500 border border-white/50 hover:-translate-y-1 animate-fade-in-up"
-                    style={{animationDelay: `${index * 100}ms`}}
+                    style={{ animationDelay: `${index * 100}ms` }}
                   >
                     <div className="p-8">
                       {/* En-tête de la commande */}
                       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-8 gap-6">
                         <div className="flex items-start space-x-4">
-                          <div className={`w-12 h-12 bg-gradient-to-r ${statusInfo.gradient} rounded-2xl flex items-center justify-center shadow-premium`}>
+                          <div
+                            className={`w-12 h-12 bg-gradient-to-r ${statusInfo.gradient} rounded-2xl flex items-center justify-center shadow-premium`}
+                          >
                             <StatusIcon className="h-6 w-6 text-white" />
                           </div>
                           <div>
@@ -198,9 +214,13 @@ export default function OrdersPage() {
                               <div className="flex items-center space-x-2">
                                 <Calendar className="h-4 w-4" />
                                 <span>
-                                  {format(new Date(order.createdAt), "dd MMMM yyyy 'à' HH:mm", {
-                                    locale: fr,
-                                  })}
+                                  {format(
+                                    new Date(order.createdAt),
+                                    "dd MMMM yyyy 'à' HH:mm",
+                                    {
+                                      locale: fr,
+                                    }
+                                  )}
                                 </span>
                               </div>
                               <div className="flex items-center space-x-2">
@@ -214,17 +234,25 @@ export default function OrdersPage() {
                         </div>
 
                         <div className="flex items-center justify-between lg:justify-end gap-4">
-                          <span className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-medium border ${statusInfo.color}`}>
+                          <span
+                            className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-medium border ${statusInfo.color}`}
+                          >
                             <StatusIcon className="h-4 w-4 mr-2" />
                             {statusInfo.label}
                           </span>
-                          
+
                           <button
-                            onClick={() => setSelectedOrder(selectedOrder?.id === order.id ? null : order)}
+                            onClick={() =>
+                              setSelectedOrder(
+                                selectedOrder?.id === order.id ? null : order
+                              )
+                            }
                             className="btn-premium-outline px-4 py-2 text-sm"
                           >
                             <Eye className="h-4 w-4 mr-2" />
-                            {selectedOrder?.id === order.id ? "Masquer" : "Détails"}
+                            {selectedOrder?.id === order.id
+                              ? "Masquer"
+                              : "Détails"}
                           </button>
                         </div>
                       </div>
@@ -235,7 +263,9 @@ export default function OrdersPage() {
                           <div key={item.id} className="relative group">
                             <div className="aspect-square relative rounded-2xl overflow-hidden bg-matcha-50 border border-matcha-100">
                               <Image
-                                src={item.product.images[0] || "/placeholder.jpg"}
+                                src={
+                                  item.product.images[0] || "/placeholder.jpg"
+                                }
                                 alt={item.product.name}
                                 fill
                                 className="object-cover group-hover:scale-110 transition-transform duration-300"
@@ -271,10 +301,16 @@ export default function OrdersPage() {
                               </h4>
                               <div className="space-y-4">
                                 {order.items.map((item) => (
-                                  <div key={item.id} className="flex items-center space-x-4 p-4 bg-matcha-50/50 rounded-2xl">
+                                  <div
+                                    key={item.id}
+                                    className="flex items-center space-x-4 p-4 bg-matcha-50/50 rounded-2xl"
+                                  >
                                     <div className="w-16 h-16 relative rounded-xl overflow-hidden bg-white border border-matcha-100">
                                       <Image
-                                        src={item.product.images[0] || "/placeholder.jpg"}
+                                        src={
+                                          item.product.images[0] ||
+                                          "/placeholder.jpg"
+                                        }
                                         alt={item.product.name}
                                         fill
                                         className="object-cover"
@@ -289,7 +325,10 @@ export default function OrdersPage() {
                                           Quantité: {item.quantity}
                                         </span>
                                         <span className="font-semibold text-matcha-700">
-                                          {(item.price * item.quantity).toFixed(2)} €
+                                          {(item.price * item.quantity).toFixed(
+                                            2
+                                          )}{" "}
+                                          €
                                         </span>
                                       </div>
                                     </div>
@@ -313,7 +352,8 @@ export default function OrdersPage() {
                                       {order.address.street}
                                     </p>
                                     <p className="text-neutral-600">
-                                      {order.address.postalCode} {order.address.city}
+                                      {order.address.postalCode}{" "}
+                                      {order.address.city}
                                     </p>
                                     <p className="text-neutral-600">
                                       {order.address.country}
@@ -324,20 +364,32 @@ export default function OrdersPage() {
 
                               {/* Récapitulatif */}
                               <div className="mt-6 p-6 bg-white/60 backdrop-blur-sm rounded-2xl border border-white/50">
-                                <h5 className="font-bold text-matcha-800 mb-4">Récapitulatif</h5>
+                                <h5 className="font-bold text-matcha-800 mb-4">
+                                  Récapitulatif
+                                </h5>
                                 <div className="space-y-2 text-sm">
                                   <div className="flex justify-between">
-                                    <span className="text-neutral-600">Sous-total</span>
-                                    <span className="font-medium">{(order.total - 5.99).toFixed(2)} €</span>
+                                    <span className="text-neutral-600">
+                                      Sous-total
+                                    </span>
+                                    <span className="font-medium">
+                                      {(order.total - 5.99).toFixed(2)} €
+                                    </span>
                                   </div>
                                   <div className="flex justify-between">
-                                    <span className="text-neutral-600">Livraison</span>
+                                    <span className="text-neutral-600">
+                                      Livraison
+                                    </span>
                                     <span className="font-medium">5,99 €</span>
                                   </div>
                                   <div className="h-px bg-matcha-200 my-3"></div>
                                   <div className="flex justify-between text-lg font-bold">
-                                    <span className="text-matcha-800">Total</span>
-                                    <span className="text-matcha-700">{order.total.toFixed(2)} €</span>
+                                    <span className="text-matcha-800">
+                                      Total
+                                    </span>
+                                    <span className="text-matcha-700">
+                                      {order.total.toFixed(2)} €
+                                    </span>
                                   </div>
                                 </div>
                               </div>
