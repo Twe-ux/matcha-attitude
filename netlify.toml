@@ -12,10 +12,10 @@
   package = "@netlify/plugin-nextjs"
 
 [context.production]
-  command = "npx prisma generate && npm run build"
+  command = "rm -rf .next && rm -rf node_modules/.cache && npx prisma generate && npm run build"
 
 [context.deploy-preview]
-  command = "npx prisma generate && npm run build"
+  command = "rm -rf .next && rm -rf node_modules/.cache && npx prisma generate && npm run build"
 
 [context.branch-deploy]
-  command = "npx prisma generate && npm run build"
+  command = "rm -rf .next && rm -rf node_modules/.cache && npx prisma generate && npm run build"
