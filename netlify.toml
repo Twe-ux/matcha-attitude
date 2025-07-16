@@ -1,0 +1,20 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NPM_FLAGS = "--version"
+  NODE_VERSION = "18"
+
+# Configuration pour Prisma
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[context.production]
+  command = "npx prisma generate && npm run build"
+
+[context.deploy-preview]
+  command = "npx prisma generate && npm run build"
+
+[context.branch-deploy]
+  command = "npx prisma generate && npm run build"
